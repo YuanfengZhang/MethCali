@@ -178,7 +178,7 @@ time python src/calibration/autogluon.py \
   -mn LightGBMXT_BAG_L2 && echo -e "2025-07-18-14-49\tLightGBMXT_BAG_L2"
 ```
 
-You could choose the `2025-07-18-14-49` full model or `best_cloned` post-processed model
+You could choose the `2025-07-18-14-49` full model or `best_cloned` post-processed model, which can both be found in models.tar.zst at [Zenodo](https://doi.org/10.5281/zenodo.17197026).
 
 ### Preparation
 
