@@ -180,11 +180,13 @@ time python src/calibration/autogluon.py \
 
 You could choose the `2025-07-18-14-49` full model or `best_cloned` post-processed model, which can both be found in models.tar.zst at [Zenodo](https://doi.org/10.5281/zenodo.17197026).
 
+The scripts to sample the training data and train the Autogluon model are in `src/calibration/training_record/sampling.py` and `src/calibration/training_record/train.py`.
+
 ### Preparation
 
 It requires:
 
-   + the pre-trained model directory `across_methods` in `autogluon_models.tar.zst` downloaded and extracted.
+   + the pre-trained model directory in `models.tar.zst` downloaded and extracted.
 
    + conda env for Autogluon, described in its [offical documentation](https://auto.gluon.ai/stable/install.html).
       There is an example below:
