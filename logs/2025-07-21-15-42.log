@@ -1,0 +1,299 @@
+Verbosity: 2 (Standard Logging)
+=================== System Info ===================
+AutoGluon Version:  1.3.1
+Python Version:     3.10.18
+Operating System:   Linux
+Platform Machine:   x86_64
+Platform Version:   #67~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Jun 24 15:19:46 UTC 2
+CPU Count:          160
+Memory Avail:       942.16 GB / 1007.46 GB (93.5%)
+Disk Space Avail:   1185.68 GB / 3519.75 GB (33.7%)
+===================================================
+Presets specified: ['experimental_quality']
+Setting dynamic_stacking from 'auto' to True. Reason: Enable dynamic_stacking when use_bag_holdout is disabled. (use_bag_holdout=False)
+Stack configuration (auto_stack=True): num_stack_levels=1, num_bag_folds=5, num_bag_sets=1
+DyStack is enabled (dynamic_stacking=True). AutoGluon will try to determine whether the input data is affected by stacked overfitting and enable or disable stacking as a consequence.
+	This is used to identify the optimal `num_stack_levels` value. Copies of AutoGluon will be fit on subsets of the data. Then holdout validation data is used to detect stacked overfitting.
+	Running DyStack for up to 21600s of the 86400s of remaining time (25%).
+	Running DyStack sub-fit in a ray process to avoid memory leakage. Enabling ray logging (enable_ray_logging=True). Specify `ds_args={'enable_ray_logging': False}` if you experience logging issues.
+		Context path: "/hot_warm_data/zhangyuanfeng/methylation/models/2025-07-21-15-42/ds_sub_fit/sub_fit_ho"
+Leaderboard on holdout data (DyStack):
+                     model  score_holdout  score_val              eval_metric  pred_time_test  pred_time_val      fit_time  pred_time_test_marginal  pred_time_val_marginal  fit_time_marginal  stack_level  can_infer  fit_order
+0          LightGBM_BAG_L2      -6.266836  -6.364837  root_mean_squared_error      472.911888    1068.162102  16581.978122               165.057574              221.257132        3053.005100            2       True          9
+1      WeightedEnsemble_L3      -6.278366  -6.358401  root_mean_squared_error      573.887234    1221.589695  19343.928818                 0.015581                0.198450           1.592316            3       True         11
+2        LightGBMXT_BAG_L2      -6.330559  -6.393201  root_mean_squared_error      408.814080    1000.134113  16289.331403               100.959765              153.229142        2760.358380            2       True          8
+3      WeightedEnsemble_L2      -6.682510  -6.705400  root_mean_squared_error      180.302158     223.971941   8622.954080                 0.014243                0.192545           1.274896            2       True          7
+4          CatBoost_BAG_L1      -6.683288  -6.707492  root_mean_squared_error       21.674515      10.351326   6008.780748                21.674515               10.351326        6008.780748            1       True          4
+5          LightGBM_BAG_L1      -7.155961  -7.207868  root_mean_squared_error      158.613400     213.428071   2612.898436               158.613400              213.428071        2612.898436            1       True          2
+6        LightGBMXT_BAG_L1      -7.231777  -7.260335  root_mean_squared_error      104.830482     163.470932   2418.824914               104.830482              163.470932        2418.824914            1       True          1
+7           XGBoost_BAG_L1      -7.336261  -7.349910  root_mean_squared_error       19.959672      34.320710    696.208977                19.959672               34.320710         696.208977            1       True          6
+8   RandomForestMSE_BAG_L1      -7.414355  -7.425250  root_mean_squared_error        1.994943     331.124368   1458.967868                 1.994943              331.124368        1458.967868            1       True          3
+9     ExtraTreesMSE_BAG_L1      -7.517989  -7.531869  root_mean_squared_error        0.781303      94.209564    333.292080                 0.781303               94.209564         333.292080            1       True          5
+10         CatBoost_BAG_L2      -7.543043  -7.568860  root_mean_squared_error      310.384915     850.840319  14173.916304                 2.530601                3.935349         644.943281            2       True         10
+	1	 = Optimal   num_stack_levels (Stacked Overfitting Occurred: False)
+	22205s	 = DyStack   runtime |	64195s	 = Remaining runtime
+Starting main fit with num_stack_levels=1.
+	For future fit calls on this dataset, you can skip DyStack to save time: `predictor.fit(..., dynamic_stacking=False, num_stack_levels=1)`
+Beginning AutoGluon training ... Time limit = 64195s
+AutoGluon will save models to "/hot_warm_data/zhangyuanfeng/methylation/models/2025-07-21-15-42"
+Train Data Rows:    12022439
+Train Data Columns: 45
+Label Column:       actual_beta
+Problem Type:       regression
+Preprocessing data ...
+Using Feature Generators to preprocess the data ...
+Fitting AutoMLPipelineFeatureGenerator...
+	Available Memory:                    964462.81 MB
+	Train Data (Original)  Memory Usage: 6519.68 MB (0.7% of available memory)
+	Inferring data type of each feature based on column values. Set feature_metadata_in to manually specify special dtypes of the features.
+	Stage 1 Generators:
+		Fitting AsTypeFeatureGenerator...
+			Note: Converting 4 features to boolean dtype as they only contain 2 unique values.
+	Stage 2 Generators:
+		Fitting FillNaFeatureGenerator...
+	Stage 3 Generators:
+		Fitting IdentityFeatureGenerator...
+		Fitting CategoryFeatureGenerator...
+			Fitting CategoryMemoryMinimizeFeatureGenerator...
+	Stage 4 Generators:
+		Fitting DropUniqueFeatureGenerator...
+	Stage 5 Generators:
+		Fitting DropDuplicatesFeatureGenerator...
+	Useless Original Features (Count: 1): ['beta_min']
+		These features carry no predictive signal and should be manually investigated.
+		This is typically a feature which has the same value for all rows.
+		These features do not need to be present at inference time.
+	Types of features in original data (raw dtype, special dtypes):
+		('bool', [])   :  2 | ['enhancer', 'promoter']
+		('float', [])  : 36 | ['GC%_70', 'CpG_GC_ratio_70', 'GC_skew_70', 'ShannonEntropy_70', 'BWT_ratio_70', ...]
+		('int', [])    :  2 | ['depth', 'depth_peak_num']
+		('object', []) :  4 | ['seq_5', 'cpg', 'location', 'method']
+	Types of features in processed data (raw dtype, special dtypes):
+		('category', [])  :  4 | ['seq_5', 'cpg', 'location', 'method']
+		('float', [])     : 34 | ['GC%_70', 'CpG_GC_ratio_70', 'GC_skew_70', 'ShannonEntropy_70', 'BWT_ratio_70', ...]
+		('int', [])       :  2 | ['depth', 'depth_peak_num']
+		('int', ['bool']) :  4 | ['enhancer', 'promoter', 'beta_q5', 'beta_q90']
+	50.0s = Fit runtime
+	44 features in original data used to generate 44 features in processed data.
+	Train Data (Processed) Memory Usage: 3382.32 MB (0.4% of available memory)
+Data preprocessing and feature engineering runtime = 55.36s ...
+AutoGluon will gauge predictive performance using evaluation metric: 'root_mean_squared_error'
+	This metric's sign has been flipped to adhere to being higher_is_better. The metric score can be multiplied by -1 to get the metric value.
+	To change this, specify the eval_metric parameter of Predictor()
+Large model count detected (119 configs) ... Only displaying the first 3 models of each family. To see all, set `verbosity=3`.
+User-specified model hyperparameters to be fit:
+{
+	'TABPFNMIX': [{'model_path_classifier': 'autogluon/tabpfn-mix-1.0-classifier', 'model_path_regressor': 'autogluon/tabpfn-mix-1.0-regressor', 'n_ensembles': 1, 'max_epochs': 30, 'ag.sample_rows_val': 5000, 'ag.max_rows': 50000, 'ag_args': {'name_suffix': '_v1'}}],
+	'NN_TORCH': [{}, {'activation': 'elu', 'dropout_prob': 0.10077639529843717, 'hidden_size': 108, 'learning_rate': 0.002735937344002146, 'num_layers': 4, 'use_batchnorm': True, 'weight_decay': 1.356433327634438e-12, 'ag_args': {'name_suffix': '_r79', 'priority': -2}}, {'activation': 'elu', 'dropout_prob': 0.11897478034205347, 'hidden_size': 213, 'learning_rate': 0.0010474382260641949, 'num_layers': 4, 'use_batchnorm': False, 'weight_decay': 5.594471067786272e-10, 'ag_args': {'name_suffix': '_r22', 'priority': -7}}],
+	'GBM': [{'extra_trees': True, 'ag_args': {'name_suffix': 'XT'}}, {}, {'learning_rate': 0.03, 'num_leaves': 128, 'feature_fraction': 0.9, 'min_data_in_leaf': 3, 'ag_args': {'name_suffix': 'Large', 'priority': 0, 'hyperparameter_tune_kwargs': None}}],
+	'CAT': [{}, {'depth': 6, 'grow_policy': 'SymmetricTree', 'l2_leaf_reg': 2.1542798306067823, 'learning_rate': 0.06864209415792857, 'max_ctr_complexity': 4, 'one_hot_max_size': 10, 'ag_args': {'name_suffix': '_r177', 'priority': -1}}, {'depth': 8, 'grow_policy': 'Depthwise', 'l2_leaf_reg': 2.7997999596449104, 'learning_rate': 0.031375015734637225, 'max_ctr_complexity': 2, 'one_hot_max_size': 3, 'ag_args': {'name_suffix': '_r9', 'priority': -5}}],
+	'XGB': [{}, {'colsample_bytree': 0.6917311125174739, 'enable_categorical': False, 'learning_rate': 0.018063876087523967, 'max_depth': 10, 'min_child_weight': 0.6028633586934382, 'ag_args': {'name_suffix': '_r33', 'priority': -8}}, {'colsample_bytree': 0.6628423832084077, 'enable_categorical': False, 'learning_rate': 0.08775715546881824, 'max_depth': 5, 'min_child_weight': 0.6294123374222513, 'ag_args': {'name_suffix': '_r89', 'priority': -16}}],
+	'FASTAI': [{}, {'bs': 256, 'emb_drop': 0.5411770367537934, 'epochs': 43, 'layers': [800, 400], 'lr': 0.01519848858318159, 'ps': 0.23782946566604385, 'ag_args': {'name_suffix': '_r191', 'priority': -4}}, {'bs': 2048, 'emb_drop': 0.05070411322605811, 'epochs': 29, 'layers': [200, 100], 'lr': 0.08974235041576624, 'ps': 0.10393466140748028, 'ag_args': {'name_suffix': '_r102', 'priority': -11}}],
+	'RF': [{'criterion': 'gini', 'ag_args': {'name_suffix': 'Gini', 'problem_types': ['binary', 'multiclass']}}, {'criterion': 'entropy', 'ag_args': {'name_suffix': 'Entr', 'problem_types': ['binary', 'multiclass']}}, {'criterion': 'squared_error', 'ag_args': {'name_suffix': 'MSE', 'problem_types': ['regression', 'quantile']}}],
+	'XT': [{'criterion': 'gini', 'ag_args': {'name_suffix': 'Gini', 'problem_types': ['binary', 'multiclass']}}, {'criterion': 'entropy', 'ag_args': {'name_suffix': 'Entr', 'problem_types': ['binary', 'multiclass']}}, {'criterion': 'squared_error', 'ag_args': {'name_suffix': 'MSE', 'problem_types': ['regression', 'quantile']}}],
+	'KNN': [{'weights': 'uniform', 'ag_args': {'name_suffix': 'Unif'}}, {'weights': 'distance', 'ag_args': {'name_suffix': 'Dist'}}],
+}
+AutoGluon will fit 2 stack levels (L1 to L2) ...
+Excluded models: ['KNN'] (Specified by `excluded_model_types`)
+Fitting 107 L1 models, fit_strategy="sequential" ...
+Fitting model: LightGBMXT_BAG_L1 ... Training model for up to 42749.29s of the 64139.96s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=2.22%)
+	-7.2548	 = Validation score   (-root_mean_squared_error)
+	2694.75s	 = Training   runtime
+	182.99s	 = Validation runtime
+Fitting model: LightGBM_BAG_L1 ... Training model for up to 40003.03s of the 61393.71s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=2.22%)
+	-7.2004	 = Validation score   (-root_mean_squared_error)
+	2685.7s	 = Training   runtime
+	250.49s	 = Validation runtime
+Fitting model: RandomForestMSE_BAG_L1 ... Training model for up to 37243.32s of the 58633.99s of remaining time.
+	-7.4201	 = Validation score   (-root_mean_squared_error)
+	1462.0s	 = Training   runtime
+	365.57s	 = Validation runtime
+Fitting model: CatBoost_BAG_L1 ... Training model for up to 35409.16s of the 56799.83s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=2.26%)
+	-6.127	 = Validation score   (-root_mean_squared_error)
+	28704.01s	 = Training   runtime
+	22.04s	 = Validation runtime
+Fitting model: ExtraTreesMSE_BAG_L1 ... Training model for up to 6611.00s of the 28001.67s of remaining time.
+	-7.5202	 = Validation score   (-root_mean_squared_error)
+	1084.86s	 = Training   runtime
+	369.52s	 = Validation runtime
+Fitting model: NeuralNetFastAI_BAG_L1 ... Training model for up to 5148.43s of the 26539.10s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=3.87%)
+	-8.2035	 = Validation score   (-root_mean_squared_error)
+	2803.52s	 = Training   runtime
+	74.74s	 = Validation runtime
+Fitting model: TabPFNMix_v1_BAG_L1 ... Training model for up to 2318.39s of the 23709.06s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=3.00%)
+	Warning: Exception caused TabPFNMix_v1_BAG_L1 to fail during training... Skipping this model.
+		[36mray::_ray_fit()[39m (pid=14625, ip=192.168.3.9)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/fold_fitting_strategy.py", line 413, in _ray_fit
+    fold_model.fit(X=X_fold, y=y_fold, X_val=X_val_fold, y_val=y_val_fold, time_limit=time_limit_fold, **resources, **kwargs_fold)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/abstract/abstract_model.py", line 1051, in fit
+    out = self._fit(**kwargs)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/tabular/models/tabpfnmix/tabpfnmix_model.py", line 128, in _fit
+    raise AssertionError(f"Skipping model due to X having more rows than `ag.max_rows={max_rows}` (len(X)={len(X)})")
+AssertionError: Skipping model due to X having more rows than `ag.max_rows=50000` (len(X)=9617951)
+Detailed Traceback:
+Traceback (most recent call last):
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/tabular/trainer/abstract_trainer.py", line 2169, in _train_and_save
+    model = self._train_single(**model_fit_kwargs)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/tabular/trainer/abstract_trainer.py", line 2055, in _train_single
+    model = model.fit(X=X, y=y, X_val=X_val, y_val=y_val, X_test=X_test, y_test=y_test, total_resources=total_resources, **model_fit_kwargs)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/abstract/abstract_model.py", line 1051, in fit
+    out = self._fit(**kwargs)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/stacker_ensemble_model.py", line 270, in _fit
+    return super()._fit(X=X, y=y, time_limit=time_limit, **kwargs)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/bagged_ensemble_model.py", line 390, in _fit
+    self._fit_folds(
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/bagged_ensemble_model.py", line 848, in _fit_folds
+    fold_fitting_strategy.after_all_folds_scheduled()
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/fold_fitting_strategy.py", line 690, in after_all_folds_scheduled
+    self._run_parallel(X, y, X_pseudo, y_pseudo, model_base_ref, time_limit_fold, head_node_id)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/fold_fitting_strategy.py", line 631, in _run_parallel
+    self._process_fold_results(finished, unfinished, fold_ctx)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/fold_fitting_strategy.py", line 587, in _process_fold_results
+    raise processed_exception
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/fold_fitting_strategy.py", line 550, in _process_fold_results
+    fold_model, pred_proba, time_start_fit, time_end_fit, predict_time, predict_1_time, predict_n_size, fit_num_cpus, fit_num_gpus = self.ray.get(finished)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(AssertionError): [36mray::_ray_fit()[39m (pid=14625, ip=192.168.3.9)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/fold_fitting_strategy.py", line 413, in _ray_fit
+    fold_model.fit(X=X_fold, y=y_fold, X_val=X_val_fold, y_val=y_val_fold, time_limit=time_limit_fold, **resources, **kwargs_fold)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/abstract/abstract_model.py", line 1051, in fit
+    out = self._fit(**kwargs)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/tabular/models/tabpfnmix/tabpfnmix_model.py", line 128, in _fit
+    raise AssertionError(f"Skipping model due to X having more rows than `ag.max_rows={max_rows}` (len(X)={len(X)})")
+AssertionError: Skipping model due to X having more rows than `ag.max_rows=50000` (len(X)=9617951)
+Fitting model: XGBoost_BAG_L1 ... Training model for up to 2298.84s of the 23689.51s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=2.93%)
+	-7.303	 = Validation score   (-root_mean_squared_error)
+	1896.0s	 = Training   runtime
+	57.2s	 = Validation runtime
+Fitting model: NeuralNetTorch_BAG_L1 ... Training model for up to 380.44s of the 21771.11s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=2.15%)
+	Time limit exceeded... Skipping NeuralNetTorch_BAG_L1.
+Fitting model: LightGBMLarge_BAG_L1 ... Training model for up to 275.96s of the 21666.63s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=2.24%)
+	-7.3155	 = Validation score   (-root_mean_squared_error)
+	246.59s	 = Training   runtime
+	6.78s	 = Validation runtime
+Fitting model: CatBoost_r177_BAG_L1 ... Training model for up to 15.68s of the 21406.35s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=2.27%)
+	Time limit exceeded... Skipping CatBoost_r177_BAG_L1.
+Fitting model: WeightedEnsemble_L2 ... Training model for up to 4274.93s of the 21389.12s of remaining time.
+	Ensemble Weights: {'CatBoost_BAG_L1': 1.0}
+	-6.127	 = Validation score   (-root_mean_squared_error)
+	1.5s	 = Training   runtime
+	0.2s	 = Validation runtime
+Excluded models: ['KNN'] (Specified by `excluded_model_types`)
+Fitting 107 L2 models, fit_strategy="sequential" ...
+Fitting model: LightGBMXT_BAG_L2 ... Training model for up to 21386.78s of the 21384.83s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=2.47%)
+	-5.7633	 = Validation score   (-root_mean_squared_error)
+	2850.43s	 = Training   runtime
+	185.1s	 = Validation runtime
+Fitting model: LightGBM_BAG_L2 ... Training model for up to 18470.26s of the 18468.31s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=2.48%)
+	-5.729	 = Validation score   (-root_mean_squared_error)
+	3010.4s	 = Training   runtime
+	223.51s	 = Validation runtime
+Fitting model: RandomForestMSE_BAG_L2 ... Training model for up to 15369.36s of the 15367.41s of remaining time.
+	Warning: Reducing model 'n_estimators' from 300 -> 164 due to low time. Expected time usage reduced from 27956.7s -> 15341.7s...
+	-5.7993	 = Validation score   (-root_mean_squared_error)
+	1630.11s	 = Training   runtime
+	237.01s	 = Validation runtime
+Fitting model: CatBoost_BAG_L2 ... Training model for up to 13487.16s of the 13485.21s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=2.55%)
+	-5.8128	 = Validation score   (-root_mean_squared_error)
+	10848.24s	 = Training   runtime
+	10.79s	 = Validation runtime
+Fitting model: ExtraTreesMSE_BAG_L2 ... Training model for up to 2593.82s of the 2591.87s of remaining time.
+	Warning: Reducing model 'n_estimators' from 300 -> 107 due to low time. Expected time usage reduced from 7182.2s -> 2566.8s...
+	-5.8063	 = Validation score   (-root_mean_squared_error)
+	593.96s	 = Training   runtime
+	154.92s	 = Validation runtime
+Fitting model: NeuralNetFastAI_BAG_L2 ... Training model for up to 1830.03s of the 1828.08s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=4.34%)
+	Time limit exceeded... Skipping NeuralNetFastAI_BAG_L2.
+Fitting model: TabPFNMix_v1_BAG_L2 ... Training model for up to 1727.62s of the 1725.67s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=3.26%)
+	Warning: Exception caused TabPFNMix_v1_BAG_L2 to fail during training... Skipping this model.
+		[36mray::_ray_fit()[39m (pid=416771, ip=192.168.3.9)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/fold_fitting_strategy.py", line 413, in _ray_fit
+    fold_model.fit(X=X_fold, y=y_fold, X_val=X_val_fold, y_val=y_val_fold, time_limit=time_limit_fold, **resources, **kwargs_fold)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/abstract/abstract_model.py", line 1051, in fit
+    out = self._fit(**kwargs)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/tabular/models/tabpfnmix/tabpfnmix_model.py", line 128, in _fit
+    raise AssertionError(f"Skipping model due to X having more rows than `ag.max_rows={max_rows}` (len(X)={len(X)})")
+AssertionError: Skipping model due to X having more rows than `ag.max_rows=50000` (len(X)=9617951)
+Detailed Traceback:
+Traceback (most recent call last):
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/tabular/trainer/abstract_trainer.py", line 2169, in _train_and_save
+    model = self._train_single(**model_fit_kwargs)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/tabular/trainer/abstract_trainer.py", line 2055, in _train_single
+    model = model.fit(X=X, y=y, X_val=X_val, y_val=y_val, X_test=X_test, y_test=y_test, total_resources=total_resources, **model_fit_kwargs)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/abstract/abstract_model.py", line 1051, in fit
+    out = self._fit(**kwargs)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/stacker_ensemble_model.py", line 270, in _fit
+    return super()._fit(X=X, y=y, time_limit=time_limit, **kwargs)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/bagged_ensemble_model.py", line 390, in _fit
+    self._fit_folds(
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/bagged_ensemble_model.py", line 848, in _fit_folds
+    fold_fitting_strategy.after_all_folds_scheduled()
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/fold_fitting_strategy.py", line 690, in after_all_folds_scheduled
+    self._run_parallel(X, y, X_pseudo, y_pseudo, model_base_ref, time_limit_fold, head_node_id)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/fold_fitting_strategy.py", line 631, in _run_parallel
+    self._process_fold_results(finished, unfinished, fold_ctx)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/fold_fitting_strategy.py", line 587, in _process_fold_results
+    raise processed_exception
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/fold_fitting_strategy.py", line 550, in _process_fold_results
+    fold_model, pred_proba, time_start_fit, time_end_fit, predict_time, predict_1_time, predict_n_size, fit_num_cpus, fit_num_gpus = self.ray.get(finished)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(AssertionError): [36mray::_ray_fit()[39m (pid=416771, ip=192.168.3.9)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/ensemble/fold_fitting_strategy.py", line 413, in _ray_fit
+    fold_model.fit(X=X_fold, y=y_fold, X_val=X_val_fold, y_val=y_val_fold, time_limit=time_limit_fold, **resources, **kwargs_fold)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/core/models/abstract/abstract_model.py", line 1051, in fit
+    out = self._fit(**kwargs)
+  File "/home/zhangyuanfeng/mambaforge/envs/ag_cpu/lib/python3.10/site-packages/autogluon/tabular/models/tabpfnmix/tabpfnmix_model.py", line 128, in _fit
+    raise AssertionError(f"Skipping model due to X having more rows than `ag.max_rows={max_rows}` (len(X)={len(X)})")
+AssertionError: Skipping model due to X having more rows than `ag.max_rows=50000` (len(X)=9617951)
+Fitting model: XGBoost_BAG_L2 ... Training model for up to 1683.30s of the 1681.36s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=3.26%)
+	-5.7726	 = Validation score   (-root_mean_squared_error)
+	1383.46s	 = Training   runtime
+	48.06s	 = Validation runtime
+Fitting model: NeuralNetTorch_BAG_L2 ... Training model for up to 261.09s of the 259.14s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=2.37%)
+	Time limit exceeded... Skipping NeuralNetTorch_BAG_L2.
+Fitting model: LightGBMLarge_BAG_L2 ... Training model for up to 110.60s of the 108.65s of remaining time.
+	Fitting 5 child models (S1F1 - S1F5) | Fitting with ParallelLocalFoldFittingStrategy (1 workers, per: cpus=120, gpus=0, memory=2.49%)
+	-26.605	 = Validation score   (-root_mean_squared_error)
+	95.86s	 = Training   runtime
+	1.64s	 = Validation runtime
+Fitting model: WeightedEnsemble_L3 ... Training model for up to 2138.68s of the -115.15s of remaining time.
+	Ensemble Weights: {'LightGBM_BAG_L2': 0.696, 'LightGBMXT_BAG_L2': 0.13, 'CatBoost_BAG_L2': 0.087, 'RandomForestMSE_BAG_L2': 0.043, 'XGBoost_BAG_L2': 0.043}
+	-5.7217	 = Validation score   (-root_mean_squared_error)
+	2.24s	 = Training   runtime
+	0.2s	 = Validation runtime
+AutoGluon training complete, total runtime = 64317.82s ... Best model: WeightedEnsemble_L3 | Estimated inference throughput: 1914.2 rows/s (2404488 batch size)
+TabularPredictor saved. To load, use: predictor = TabularPredictor.load("/hot_warm_data/zhangyuanfeng/methylation/models/2025-07-21-15-42")
+These features in provided data are not utilized by the predictor and will be ignored: ['beta_min']
+Computing feature importance via permutation shuffling for 44 features using 5000 rows with 5 shuffle sets...
+	32944.65s	= Expected runtime (6588.93s per shuffle set)
+	1902.19s	= Actual runtime (Completed 5 of 5 shuffle sets)
